@@ -1,13 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
-import App from './App';
+// import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { createBrowserHistory } from 'history';
+import { Router, Route, Switch } from 'react-router-dom';
+import Header from './Components/Header';
+import SignIn from './Screen/SignIn';
+import Dashboard from './Screen/Dashboard';
+import Fitur1 from './Screen/Fitur1';
+import Fitur2 from './Screen/Fitur2';
+import Home from './Screen/Home';
+import ChangeName from './Screen/ChangeName';
+import ChangeRole from './Screen/ChangeRole';
 
+var hist = createBrowserHistory();
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router history={hist}>
+    <Switch>
+      <Route exact path="/" component={SignIn} />
+      <Route exact path="/home" component={Home} />
+      <Route exact path="/dashboard" component={Dashboard} />
+      <Route exact path="/fitur1" component={Fitur1} />
+      <Route exact path="/fitur2" component={Fitur2} />
+      <Route path="/changename" component={ChangeName} />
+      <Route path="/changerole" component={ChangeRole} />
+    </Switch>
+  </Router>,
   document.getElementById('root')
 );
 
