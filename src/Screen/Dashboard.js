@@ -2,12 +2,16 @@ import React, { Component, Fragment } from 'react';
 import { Button, Table, Container } from 'react-bootstrap';
 import Header from '../Components/Header';
 import axios from 'axios';
+import ModalWrongPassword from '../Components/ModalWrongPassword';
 
 class Dashboard extends Component {
   state = {
     role: '',
     logout: false,
     dataUser: [],
+    logData: '',
+    errMsg: '',
+    errData: false,
   };
 
   requestUser = () => {
@@ -15,18 +19,18 @@ class Dashboard extends Component {
       headers: { authorization: localStorage.getItem('token') },
     };
     axios
-      .get(`${process.env.REACT_APP_API_HOST}/auth/role`, headers)
+      .get(`${process.env.REACT_APP_API_HOST}/user/allUser`, headers)
       .then((res) => {
-        this.setState(
-          {
-            dataUser: res.data.data,
-          },
-          () => {
-            console.log(this.state.dataUser);
-          }
-        );
+        this.setState({
+          dataUser: res.data.data,
+        });
       })
-      .catch(console.log);
+      .catch((err) => {
+        this.setState({
+          errMsg: err.response.data.data.msg,
+          errData: true,
+        });
+      });
   };
 
   componentDidMount() {
@@ -35,24 +39,45 @@ class Dashboard extends Component {
     if (!token || !logData) {
       this.setState({
         logout: true,
+        logData: logData,
       });
     } else {
       this.requestUser();
     }
   }
 
-  changeName = () => {
-    this.props.history.push('changename');
+  closeData = () => {
+    this.setState(
+      {
+        errData: false,
+      },
+      () => {
+        this.props.history.goBack();
+      }
+    );
   };
 
-  changeRole = () => {
-    this.props.history.push('changerole');
+  changeName = () => {
+    this.props.history.push('changedata');
+  };
+
+  changeRole = (e, item) => {
+    console.log(item);
+    this.props.history.push({
+      pathname: '/changerole',
+      state: { userData: item },
+    });
   };
 
   render() {
     return (
       <Fragment>
         <Header />
+        <ModalWrongPassword
+          open={this.state.errData}
+          msg={this.state.errMsg}
+          closeModal={this.closeData.bind(this)}
+        />
         <Container>
           <p
             style={{
@@ -92,12 +117,12 @@ class Dashboard extends Component {
                                 this.changeName();
                               }}
                             >
-                              Change Name
+                              Change Data
                             </Button>
                             <Button
                               style={{ margin: 5 }}
                               onClick={(e) => {
-                                this.changeRole();
+                                this.changeRole(e, item);
                               }}
                             >
                               Change Role

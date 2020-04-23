@@ -7,18 +7,16 @@ import Header from '../Components/Header';
 
 class ChangeRole extends Component {
   state = {
-    username: '',
-    password: '',
-    errData: false,
-    errMsg: '',
+    userData: {},
   };
 
-  // componentDidMount() {
-  //   const userLoged = localStorage.getItem('token');
-  //   if (userLoged) {
-  //     this.props.history.push('/home');
-  //   }
-  // }
+  componentDidMount() {
+    if (this.props.location.state.userData) {
+      this.setState({
+        userData: this.props.location.state.userData,
+      });
+    }
+  }
 
   handleChangeText = (e, type) => {
     this.setState({
@@ -34,23 +32,26 @@ class ChangeRole extends Component {
 
   handleChangeRole = (e) => {
     e.preventDefault();
-    const { username, password } = this.state;
+    const token = localStorage.getItem('token');
+    const { id, role } = this.state.userData;
     const body = {
-      username,
-      password,
+      id,
+      role,
+    };
+    const headers = {
+      headers: { authorization: token },
     };
     axios
-      .post(`${process.env.REACT_APP_API_HOST}/auth/login`, qs.stringify(body))
+      .put(`${process.env.REACT_APP_API_HOST}/user/changerole`, body, headers)
       .then((res) => {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('logedData', JSON.stringify(res.data.data));
-        this.props.history.push('/home');
+        this.props.history.goBack();
       })
       .catch((err) => {
-        this.setState({
-          errMsg: err.response.data.data.msg,
-          errData: true,
-        });
+        // console.log(err.response);
+        // this.setState({
+        //   errMsg: err.response.data.data.msg,
+        //   errData: true,
+        // });
       });
   };
 
@@ -82,32 +83,27 @@ class ChangeRole extends Component {
                 textAlign: 'center',
               }}
             >
-              Login
+              Change{' '}
+              {this.state.userData.name ? this.state.userData.name : null} Role
             </p>
             <Form>
-              <Form.Group
-                controlId="formBasicUsername"
-                style={{ marginBottom: 20 }}
-              >
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label>Select New Role</Form.Label>
                 <Form.Control
-                  type="username"
-                  placeholder="username"
+                  as="select"
+                  value={this.state.userData.role}
                   onChange={(e) => {
-                    this.handleChangeText(e, 'username');
+                    this.setState({
+                      userData: {
+                        ...this.state.userData,
+                        role: e.target.value,
+                      },
+                    });
                   }}
-                  size="lg"
-                />
-              </Form.Group>
-
-              <Form.Group controlId="formBasicPassword">
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  onChange={(e) => {
-                    this.handleChangeText(e, 'password');
-                  }}
-                  size="lg"
-                />
+                >
+                  <option>Admin</option>
+                  <option>User</option>
+                </Form.Control>
               </Form.Group>
 
               <Button
@@ -120,28 +116,7 @@ class ChangeRole extends Component {
                 }}
                 size="lg"
               >
-                Login
-              </Button>
-              <p
-                style={{
-                  marginTop: 10,
-                  fontFamily: 'Segoe UI',
-                  fontSize: '15px',
-                  textAlign: 'center',
-                }}
-              >
-                Or
-              </p>
-              <Button
-                variant="secondary"
-                type="submit"
-                block
-                size="lg"
-                onClick={() => {
-                  this.props.history.push('/signup');
-                }}
-              >
-                Sign Up
+                Change Role
               </Button>
             </Form>
           </div>

@@ -12,7 +12,7 @@ import Dashboard from './Screen/Dashboard';
 import Fitur1 from './Screen/Fitur1';
 import Fitur2 from './Screen/Fitur2';
 import Home from './Screen/Home';
-import ChangeName from './Screen/ChangeName';
+import ChangeData from './Screen/ChangeData';
 import ChangeRole from './Screen/ChangeRole';
 
 var hist = createBrowserHistory();
@@ -24,7 +24,7 @@ ReactDOM.render(
       <Route exact path="/dashboard" component={Dashboard} />
       <Route exact path="/fitur1" component={Fitur1} />
       <Route exact path="/fitur2" component={Fitur2} />
-      <Route path="/changename" component={ChangeName} />
+      <Route path="/changedata" component={ChangeData} />
       <Route path="/changerole" component={ChangeRole} />
     </Switch>
   </Router>,

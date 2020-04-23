@@ -5,7 +5,7 @@ import qs from 'qs';
 import ModalWrongPassword from '../Components/ModalWrongPassword';
 import Header from '../Components/Header';
 
-class ChangeName extends Component {
+class ChangeData extends Component {
   state = {
     username: '',
     password: '',
@@ -32,7 +32,7 @@ class ChangeName extends Component {
     });
   };
 
-  handleChangeName = (e) => {
+  handleChangeData = (e) => {
     e.preventDefault();
     const { username, password } = this.state;
     const body = {
@@ -116,7 +116,7 @@ class ChangeName extends Component {
                 type="submit"
                 block
                 onClick={(e) => {
-                  this.handleChangeName(e);
+                  this.handleChangeData(e);
                 }}
                 size="lg"
               >
@@ -151,4 +151,4 @@ class ChangeName extends Component {
   }
 }
 
-export default ChangeName;
+export default ChangeData;
