@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Table, Container, Row, Col } from 'react-bootstrap';
+import { Button, Container, Row, Col } from 'react-bootstrap';
 import Header from '../Components/Header';
 
 class Home extends Component {
@@ -57,15 +57,27 @@ class Home extends Component {
 
             {role === 'Super' || role === 'Admin' ? (
               <Col>
-                <Button variant="primary" block>
-                  Fitur 1
+                <Button
+                  variant="primary"
+                  block
+                  onClick={() => {
+                    this.props.history.push('/userlist');
+                  }}
+                >
+                  UserList
                 </Button>
               </Col>
             ) : null}
 
             <Col>
-              <Button variant="primary" block>
-                Fitur 2
+              <Button
+                variant="primary"
+                block
+                onClick={(e) => {
+                  this.props.history.push('profile');
+                }}
+              >
+                Profile
               </Button>
             </Col>
           </Row>

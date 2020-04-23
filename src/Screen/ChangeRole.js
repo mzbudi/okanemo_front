@@ -1,20 +1,26 @@
 import React, { Component, Fragment } from 'react';
-import { Container, Form, Button, InputGroup } from 'react-bootstrap';
+import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-import qs from 'qs';
 import ModalWrongPassword from '../Components/ModalWrongPassword';
 import Header from '../Components/Header';
 
 class ChangeRole extends Component {
   state = {
     userData: {},
+    errMsg: '',
+    errData: false,
   };
 
   componentDidMount() {
-    if (this.props.location.state.userData) {
+    if (
+      this.props.location.state.userData &&
+      this.props.location.state !== undefined
+    ) {
       this.setState({
         userData: this.props.location.state.userData,
       });
+    } else {
+      this.props.history.goBack();
     }
   }
 
@@ -25,9 +31,14 @@ class ChangeRole extends Component {
   };
 
   closeData = () => {
-    this.setState({
-      errData: false,
-    });
+    this.setState(
+      {
+        errData: false,
+      },
+      () => {
+        this.props.history.goBack();
+      }
+    );
   };
 
   handleChangeRole = (e) => {
@@ -47,11 +58,10 @@ class ChangeRole extends Component {
         this.props.history.goBack();
       })
       .catch((err) => {
-        // console.log(err.response);
-        // this.setState({
-        //   errMsg: err.response.data.data.msg,
-        //   errData: true,
-        // });
+        this.setState({
+          errMsg: err.response.data.data.msg,
+          errData: true,
+        });
       });
   };
 

@@ -6,14 +6,13 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { createBrowserHistory } from 'history';
 import { Router, Route, Switch } from 'react-router-dom';
-import Header from './Components/Header';
 import SignIn from './Screen/SignIn';
 import Dashboard from './Screen/Dashboard';
-import Fitur1 from './Screen/Fitur1';
-import Fitur2 from './Screen/Fitur2';
+import UserList from './Screen/UserList';
 import Home from './Screen/Home';
 import ChangeData from './Screen/ChangeData';
 import ChangeRole from './Screen/ChangeRole';
+import Profile from './Screen/Profile';
 
 var hist = createBrowserHistory();
 ReactDOM.render(
@@ -22,8 +21,8 @@ ReactDOM.render(
       <Route exact path="/" component={SignIn} />
       <Route exact path="/home" component={Home} />
       <Route exact path="/dashboard" component={Dashboard} />
-      <Route exact path="/fitur1" component={Fitur1} />
-      <Route exact path="/fitur2" component={Fitur2} />
+      <Route exact path="/userlist" component={UserList} />
+      <Route exact path="/profile" component={Profile} />
       <Route path="/changedata" component={ChangeData} />
       <Route path="/changerole" component={ChangeRole} />
     </Switch>

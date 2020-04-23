@@ -1,30 +1,33 @@
 import React, { Component, Fragment } from 'react';
-import { Container, Form, Button, InputGroup } from 'react-bootstrap';
+import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-import qs from 'qs';
 import ModalWrongPassword from '../Components/ModalWrongPassword';
 import Header from '../Components/Header';
 
 class ChangeData extends Component {
   state = {
-    username: '',
-    password: '',
+    userData: {},
     errData: false,
     errMsg: '',
   };
 
-  // componentDidMount() {
-  //   const userLoged = localStorage.getItem('token');
-  //   if (userLoged) {
-  //     this.props.history.push('/home');
-  //   }
-  // }
-
-  handleChangeText = (e, type) => {
-    this.setState({
-      [type]: e.target.value,
-    });
-  };
+  componentDidMount() {
+    if (
+      this.props.location.state.userData &&
+      this.props.location.state !== undefined
+    ) {
+      this.setState(
+        {
+          userData: this.props.location.state.userData,
+        },
+        () => {
+          console.log(this.state.userData);
+        }
+      );
+    } else {
+      this.props.history.goBack();
+    }
+  }
 
   closeData = () => {
     this.setState({
@@ -34,17 +37,22 @@ class ChangeData extends Component {
 
   handleChangeData = (e) => {
     e.preventDefault();
-    const { username, password } = this.state;
+    const { id, name, password } = this.state.userData;
     const body = {
-      username,
+      name,
       password,
+      id,
+    };
+
+    const token = localStorage.getItem('token');
+
+    const headers = {
+      headers: { authorization: token },
     };
     axios
-      .post(`${process.env.REACT_APP_API_HOST}/auth/login`, qs.stringify(body))
+      .put(`${process.env.REACT_APP_API_HOST}/user/changedata`, body, headers)
       .then((res) => {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('logedData', JSON.stringify(res.data.data));
-        this.props.history.push('/home');
+        this.props.history.goBack();
       })
       .catch((err) => {
         this.setState({
@@ -82,18 +90,28 @@ class ChangeData extends Component {
                 textAlign: 'center',
               }}
             >
-              Login
+              Change Data
             </p>
             <Form>
               <Form.Group
-                controlId="formBasicUsername"
+                controlId="formBasicname"
                 style={{ marginBottom: 20 }}
               >
                 <Form.Control
-                  type="username"
-                  placeholder="username"
+                  placeholder="Name"
+                  value={this.state.userData.name || ''}
                   onChange={(e) => {
-                    this.handleChangeText(e, 'username');
+                    this.setState(
+                      {
+                        userData: {
+                          ...this.state.userData,
+                          name: e.target.value,
+                        },
+                      },
+                      () => {
+                        console.log(this.state.userData);
+                      }
+                    );
                   }}
                   size="lg"
                 />
@@ -103,8 +121,19 @@ class ChangeData extends Component {
                 <Form.Control
                   type="password"
                   placeholder="Password"
+                  value={this.state.userData.password || ''}
                   onChange={(e) => {
-                    this.handleChangeText(e, 'password');
+                    this.setState(
+                      {
+                        userData: {
+                          ...this.state.userData,
+                          password: e.target.value,
+                        },
+                      },
+                      () => {
+                        console.log(this.state.userData);
+                      }
+                    );
                   }}
                   size="lg"
                 />
@@ -120,28 +149,7 @@ class ChangeData extends Component {
                 }}
                 size="lg"
               >
-                Login
-              </Button>
-              <p
-                style={{
-                  marginTop: 10,
-                  fontFamily: 'Segoe UI',
-                  fontSize: '15px',
-                  textAlign: 'center',
-                }}
-              >
-                Or
-              </p>
-              <Button
-                variant="secondary"
-                type="submit"
-                block
-                size="lg"
-                onClick={() => {
-                  this.props.history.push('/signup');
-                }}
-              >
-                Sign Up
+                Change Data
               </Button>
             </Form>
           </div>

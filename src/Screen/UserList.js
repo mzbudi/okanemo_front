@@ -4,7 +4,7 @@ import Header from '../Components/Header';
 import axios from 'axios';
 import ModalWrongPassword from '../Components/ModalWrongPassword';
 
-class Dashboard extends Component {
+class UserList extends Component {
   state = {
     role: '',
     logout: false,
@@ -65,7 +65,6 @@ class Dashboard extends Component {
   };
 
   changeRole = (e, item) => {
-    console.log(item);
     this.props.history.push({
       pathname: '/changerole',
       state: { userData: item },
@@ -91,7 +90,7 @@ class Dashboard extends Component {
               fontSize: 20,
             }}
           >
-            Dashboard
+            User List
           </p>
           <Table bordered hover style={{ marginTop: 30 }} className="shadow-sm">
             <thead>
@@ -100,7 +99,7 @@ class Dashboard extends Component {
                 <th>Name</th>
                 <th>Username</th>
                 <th>Role</th>
-                <th>Action</th>
+                <th style={{ textAlign: 'center' }}>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -113,7 +112,7 @@ class Dashboard extends Component {
                           <td>{item.name}</td>
                           <td>{item.username}</td>
                           <td>{item.role}</td>
-                          <td>
+                          <td style={{ textAlign: 'center' }}>
                             <Button
                               style={{ margin: 5 }}
                               onClick={(e) => {
@@ -121,14 +120,6 @@ class Dashboard extends Component {
                               }}
                             >
                               Change Data
-                            </Button>
-                            <Button
-                              style={{ margin: 5 }}
-                              onClick={(e) => {
-                                this.changeRole(e, item);
-                              }}
-                            >
-                              Change Role
                             </Button>
                           </td>
                         </tr>
@@ -144,4 +135,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default UserList;

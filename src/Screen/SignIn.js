@@ -122,27 +122,6 @@ class SignIn extends Component {
               >
                 Login
               </Button>
-              <p
-                style={{
-                  marginTop: 10,
-                  fontFamily: 'Segoe UI',
-                  fontSize: '15px',
-                  textAlign: 'center',
-                }}
-              >
-                Or
-              </p>
-              <Button
-                variant="secondary"
-                type="submit"
-                block
-                size="lg"
-                onClick={() => {
-                  this.props.history.push('/signup');
-                }}
-              >
-                Sign Up
-              </Button>
             </Form>
           </div>
         </Container>
