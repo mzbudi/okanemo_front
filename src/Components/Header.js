@@ -1,5 +1,5 @@
-import React, { Component, Fragment, useEffect, useState } from 'react';
-import { Navbar, Nav, Image, Button } from 'react-bootstrap';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Navbar, Nav, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 
 const Header = () => {

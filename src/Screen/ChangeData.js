@@ -12,20 +12,12 @@ class ChangeData extends Component {
   };
 
   componentDidMount() {
-    if (
-      this.props.location.state.userData &&
-      this.props.location.state !== undefined
-    ) {
-      this.setState(
-        {
-          userData: this.props.location.state.userData,
-        },
-        () => {
-          console.log(this.state.userData);
-        }
-      );
+    if (this.props.location.state && this.props.location.state !== undefined) {
+      this.setState({
+        userData: this.props.location.state.userData,
+      });
     } else {
-      this.props.history.goBack();
+      this.props.history.push('home');
     }
   }
 
@@ -101,17 +93,12 @@ class ChangeData extends Component {
                   placeholder="Name"
                   value={this.state.userData.name || ''}
                   onChange={(e) => {
-                    this.setState(
-                      {
-                        userData: {
-                          ...this.state.userData,
-                          name: e.target.value,
-                        },
+                    this.setState({
+                      userData: {
+                        ...this.state.userData,
+                        name: e.target.value,
                       },
-                      () => {
-                        console.log(this.state.userData);
-                      }
-                    );
+                    });
                   }}
                   size="lg"
                 />
@@ -123,17 +110,12 @@ class ChangeData extends Component {
                   placeholder="Password"
                   value={this.state.userData.password || ''}
                   onChange={(e) => {
-                    this.setState(
-                      {
-                        userData: {
-                          ...this.state.userData,
-                          password: e.target.value,
-                        },
+                    this.setState({
+                      userData: {
+                        ...this.state.userData,
+                        password: e.target.value,
                       },
-                      () => {
-                        console.log(this.state.userData);
-                      }
-                    );
+                    });
                   }}
                   size="lg"
                 />

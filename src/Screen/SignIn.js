@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Container, Form, Button, InputGroup } from 'react-bootstrap';
+import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import qs from 'qs';
 import ModalWrongPassword from '../Components/ModalWrongPassword';

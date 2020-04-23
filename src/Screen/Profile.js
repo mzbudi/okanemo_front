@@ -1,8 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Container, Form, Button, InputGroup } from 'react-bootstrap';
-import axios from 'axios';
-import qs from 'qs';
-import ModalWrongPassword from '../Components/ModalWrongPassword';
+import { Container, Form } from 'react-bootstrap';
 import Header from '../Components/Header';
 
 class Profile extends Component {
@@ -14,14 +11,9 @@ class Profile extends Component {
     const userLoged = localStorage.getItem('logedData');
     if (userLoged) {
       // let parsedData = JSON.parse(userLoged);
-      this.setState(
-        {
-          userLoged: JSON.parse(userLoged),
-        },
-        () => {
-          console.log(this.state.userLoged);
-        }
-      );
+      this.setState({
+        userLoged: JSON.parse(userLoged),
+      });
     } else {
       this.props.history.push('/home');
     }

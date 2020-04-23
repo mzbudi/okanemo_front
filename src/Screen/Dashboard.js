@@ -65,7 +65,6 @@ class Dashboard extends Component {
   };
 
   changeRole = (e, item) => {
-    console.log(item);
     this.props.history.push({
       pathname: '/changerole',
       state: { userData: item },
